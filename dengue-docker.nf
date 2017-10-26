@@ -1,5 +1,26 @@
 #!/usr/bin/env nextflow
 
+/*
+ * Copyright (c) 2017 Thanh Le Viet
+
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+ */
 
 // General configuration variables
 params.help = false
@@ -49,6 +70,35 @@ primer_denv1 = "primer_d1.fasta"
 primer_denv2 = "primer_d2.fasta"
 primer_denv3 = "primer_d3.fasta"
 primer_denv4 = "primer_d4.fasta"
+
+
+// Display help menu
+if(params.help) {
+    log.info ''
+    log.info 'OUCRU - Dengue NGS Pipelines'
+    log.info ''
+    log.info 'Usage: '
+    log.info '    nextflow denue-docker.nf -profile docker [options]'
+    log.info ''
+    log.info 'General Options: '
+    log.info '    --input           DIR     Directory of paired FASTQ files'
+    log.info '    --reads           STRING["*_L001_R{1,2}_001.fastq.gz"]  Pattern for recognizing paired reads'
+    log.info '    --threads         INT     Number of threads to use for each process'
+    log.info '    --output          DIR     Directory to write output files to'
+    log.info '    --refdb           DIR     Directory of 4 reference fasta files (DENV1, DENV2, DENV3, DENV4)'
+    log.info '    --primerdb        DIR     Directory of 4 primer fasta files (DENV1, DENV2, DENV3, DENV4)'
+    log.info ''
+    log.info 'Trimmomatic Options: '
+    log.info '    --leading         INT[20]     Remove leading low quality or N bases'
+    log.info '    --trailing        INT[20]     Remove trailing low quality or N bases'
+    log.info '    --slidingwindow   INT[3:30]   Scan read with a sliding window'
+    log.info '    --minlen          INT[30]     Drop reads below INT bases long'
+    log.info ''
+    log.info 'Notes: [defaul value]'
+    log.info 'thanhlv@oucru.org'
+    log.info ''
+    return
+}
 
 
 Channel
